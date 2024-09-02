@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -15,6 +16,29 @@ app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this to a secure 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
+
+# Configure CORS
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "https://musical-broccoli-jjrwvpxwgvrhppvr-3000.app.github.dev",
+        "allow_headers": ["Content-Type", "Authorization"],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    }
+})
+
+# Define a function to handle preflight OPTIONS requests globally
+@app.before_request
+def handle_options_request():
+    if request.method == 'OPTIONS':
+        response = app.make_default_options_response()
+        headers = response.headers
+
+        headers['Access-Control-Allow-Origin'] = 'https://musical-broccoli-jjrwvpxwgvrhppvr-3000.app.github.dev'
+        headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        headers['Access-Control-Max-Age'] = '86400'  # Cache preflight response for 1 day
+
+        return response
 
 # Define Models
 class User(db.Model):
