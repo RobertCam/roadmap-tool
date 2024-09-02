@@ -1,40 +1,31 @@
 import React, { useContext } from 'react';
-import { AuthProvider, AuthContext } from './AuthContext';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 import InitiativeList from './components/InitiativeList';
-import ProjectList from './components/ProjectList';
-import MilestoneList from './components/MilestoneList';
-import InitiativeForm from './components/InitiativeForm';
-import ProjectForm from './components/ProjectForm';
-import MilestoneForm from './components/MilestoneForm';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import Home from './components/Home';
 
-function App() {
-    const { user, logout } = useContext(AuthContext);
+const App = () => {
+    const { user } = useContext(AuthContext);
 
     return (
-        <AuthProvider>
-            <div className="App">
-                <h1>Product Management Roadmap</h1>
-                {!user ? (
-                    <>
-                        <Login />
-                        <SignUp />
-                    </>
-                ) : (
-                    <>
-                        <button onClick={logout}>Logout</button>
-                        <InitiativeForm />
-                        <ProjectForm />
-                        <MilestoneForm />
-                        <InitiativeList />
-                        <ProjectList />
-                        <MilestoneList />
-                    </>
-                )}
-            </div>
-        </AuthProvider>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route
+                    path="/"
+                    element={user ? <Home /> : <Navigate to="/login" />}
+                />
+                <Route
+                    path="/initiatives"
+                    element={user ? <InitiativeList /> : <Navigate to="/login" />}
+                />
+                {/* Other routes here */}
+            </Routes>
+        </Router>
     );
-}
+};
 
 export default App;

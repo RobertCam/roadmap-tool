@@ -9,11 +9,11 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
+            console.log("Token found, setting authorization header:", token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            // Fetch user information from the server or decode token
-            // For simplicity, assuming token is valid and user is logged in
-            setUser({ username: "testuser" });
+            setUser({ username: 'testuser' }); // Set user state (replace with actual user info if available)
         } else {
+            console.log("No token found, clearing authorization header");
             delete axios.defaults.headers.common['Authorization'];
         }
     }, [token]);
@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
+        delete axios.defaults.headers.common['Authorization'];
     };
 
     return (

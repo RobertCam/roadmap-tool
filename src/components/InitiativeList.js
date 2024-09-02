@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 const InitiativeList = () => {
     const [initiatives, setInitiatives] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`)
-            .then(response => setInitiatives(response.data))
-            .catch(error => console.error('There was an error fetching the initiatives!', error));
+        const fetchInitiatives = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`);
+                setInitiatives(response.data);
+            } catch (error) {
+                console.error('There was an error fetching the initiatives!', error);
+                console.log(axios.defaults.headers.common); // Log headers to ensure the Authorization header is set
+            }
+        };
+
+        fetchInitiatives();
     }, []);
 
     return (

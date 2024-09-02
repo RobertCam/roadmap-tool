@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const SignUp = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook to navigate programmatically
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,9 +14,8 @@ const Register = () => {
 
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/register`, user)
             .then(response => {
-                alert("Registration successful! You can now log in.");
-                setUsername('');
-                setPassword('');
+                alert("Registration successful!");
+                navigate('/login'); // Redirect to login after sign-up
             })
             .catch(error => {
                 console.error('There was an error registering the user!', error);
@@ -24,7 +25,7 @@ const Register = () => {
 
     return (
         <div>
-            <h2>Register</h2>
+            <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -40,10 +41,10 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Register</button>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
     );
 };
 
-export default Register;
+export default SignUp;
