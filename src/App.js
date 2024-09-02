@@ -2,15 +2,22 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import InitiativeList from './components/InitiativeList';
+import ProjectList from './components/ProjectList';
+import MilestoneList from './components/MilestoneList';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
+import Navbar from './components/Navbar'; 
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.min.js';
+
 
 const App = () => {
     const { user } = useContext(AuthContext);
 
     return (
         <Router>
+            <Navbar />
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -22,7 +29,14 @@ const App = () => {
                     path="/initiatives"
                     element={user ? <InitiativeList /> : <Navigate to="/login" />}
                 />
-                {/* Other routes here */}
+                <Route
+                    path="/projects"
+                    element={user ? <ProjectList /> : <Navigate to="/login" />}
+                />
+                <Route
+                    path="/milestones"
+                    element={user ? <MilestoneList /> : <Navigate to="/login" />}
+                />
             </Routes>
         </Router>
     );

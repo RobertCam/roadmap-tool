@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const ProjectForm = () => {
@@ -9,21 +9,10 @@ const ProjectForm = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
-    const [projectBriefLink, setProjectBriefLink] = useState('');
-    const [designBoardLink, setDesignBoardLink] = useState('');
-    const [initiativeId, setInitiativeId] = useState('');
-    const [initiatives, setInitiatives] = useState([]);
-
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`)
-            .then(response => setInitiatives(response.data))
-            .catch(error => console.error('There was an error fetching the initiatives!', error));
-    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const project = {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/projects`, {
             name,
             description,
             problemStatement,
@@ -31,49 +20,100 @@ const ProjectForm = () => {
             startDate,
             endDate,
             status,
-            projectBriefLink,
-            designBoardLink,
-            initiativeId
-        };
-
-        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/projects`, project)
-            .then(response => {
-                console.log(response.data);
-                // Reset form after submission
-                setName('');
-                setDescription('');
-                setProblemStatement('');
-                setHypothesis('');
-                setStartDate('');
-                setEndDate('');
-                setStatus('');
-                setProjectBriefLink('');
-                setDesignBoardLink('');
-                setInitiativeId('');
-            })
-            .catch(error => console.error('There was an error creating the project!', error));
+        })
+        .then(response => {
+            console.log('Project created successfully:', response.data);
+            // Clear the form after submission
+            setName('');
+            setDescription('');
+            setProblemStatement('');
+            setHypothesis('');
+            setStartDate('');
+            setEndDate('');
+            setStatus('');
+        })
+        .catch(error => {
+            console.error('There was an error creating the project!', error);
+        });
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Create a New Project</h2>
-            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name" required />
-            <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" required></textarea>
-            <textarea value={problemStatement} onChange={e => setProblemStatement(e.target.value)} placeholder="Problem Statement" required></textarea>
-            <textarea value={hypothesis} onChange={e => setHypothesis(e.target.value)} placeholder="Hypothesis" required></textarea>
-            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} required />
-            <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} required />
-            <input type="text" value={status} onChange={e => setStatus(e.target.value)} placeholder="Status" required />
-            <input type="url" value={projectBriefLink} onChange={e => setProjectBriefLink(e.target.value)} placeholder="Link to Project Brief" />
-            <input type="url" value={designBoardLink} onChange={e => setDesignBoardLink(e.target.value)} placeholder="Link to Design Board" />
-            <select value={initiativeId} onChange={e => setInitiativeId(e.target.value)} required>
-                <option value="">Select Initiative</option>
-                {initiatives.map(initiative => (
-                    <option key={initiative.id} value={initiative.id}>{initiative.name}</option>
-                ))}
-            </select>
-            <button type="submit">Create Project</button>
-        </form>
+        <div className="container">
+            <h2>Create New Project</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-field">
+                    <input
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="name">Project Name</label>
+                </div>
+                <div className="input-field">
+                    <textarea
+                        id="description"
+                        className="materialize-textarea"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="description">Description</label>
+                </div>
+                <div className="input-field">
+                    <textarea
+                        id="problemStatement"
+                        className="materialize-textarea"
+                        value={problemStatement}
+                        onChange={(e) => setProblemStatement(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="problemStatement">Problem Statement</label>
+                </div>
+                <div className="input-field">
+                    <textarea
+                        id="hypothesis"
+                        className="materialize-textarea"
+                        value={hypothesis}
+                        onChange={(e) => setHypothesis(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="hypothesis">Hypothesis</label>
+                </div>
+                <div className="input-field">
+                    <input
+                        id="startDate"
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="startDate">Start Date</label>
+                </div>
+                <div className="input-field">
+                    <input
+                        id="endDate"
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="endDate">End Date</label>
+                </div>
+                <div className="input-field">
+                    <input
+                        id="status"
+                        type="text"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="status">Status</label>
+                </div>
+                <button type="submit" className="btn waves-effect waves-light">Add Project</button>
+            </form>
+        </div>
     );
 };
 

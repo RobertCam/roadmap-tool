@@ -19,7 +19,7 @@ const Login = () => {
             });
             const { access_token } = response.data;
             login(access_token);
-            navigate('/home');  // Redirect to home after login
+            navigate('/');  // Redirect to home after login
         } catch (error) {
             console.error('There was an error logging in!', error);
             alert('Login failed!');
@@ -27,27 +27,34 @@ const Login = () => {
     };    
 
     return (
-        <div>
+        <div className="container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
+                <div className="input-field">
+                    <input
+                        id="username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="username">Username</label>
+                </div>
+                <div className="input-field">
+                    <input
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <label htmlFor="password">Password</label>
+                </div>
+                <button type="submit" className="btn waves-effect waves-light">Login</button>
             </form>
         </div>
     );
+    
 };
 
 export default Login;

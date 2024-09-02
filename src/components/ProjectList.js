@@ -11,16 +11,23 @@ const ProjectList = () => {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <h2>Projects</h2>
-            <ul>
+            <div className="row">
                 {projects.map(project => (
-                    <li key={project.id}>
-                        <h3>{project.name}</h3>
-                        <p>{project.description}</p>
-                    </li>
+                    <div className="col s12 m6 l4" key={project.id}>
+                        <div className="card">
+                            <div className="card-content">
+                                <span className="card-title">{project.name}</span>
+                                <p>{project.description}</p>
+                            </div>
+                            <div className="card-action">
+                                <a href="#">View More</a>
+                            </div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

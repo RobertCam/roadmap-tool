@@ -11,16 +11,23 @@ const MilestoneList = () => {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <h2>Milestones</h2>
-            <ul>
+            <div className="row">
                 {milestones.map(milestone => (
-                    <li key={milestone.id}>
-                        <h3>{milestone.name}</h3>
-                        <p>{milestone.description}</p>
-                    </li>
+                    <div className="col s12 m6 l4" key={milestone.id}>
+                        <div className="card">
+                            <div className="card-content">
+                                <span className="card-title">{milestone.name}</span>
+                                <p>{milestone.description}</p>
+                            </div>
+                            <div className="card-action">
+                                <a href="#">View More</a>
+                            </div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

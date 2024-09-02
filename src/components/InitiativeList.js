@@ -5,30 +5,29 @@ const InitiativeList = () => {
     const [initiatives, setInitiatives] = useState([]);
 
     useEffect(() => {
-        const fetchInitiatives = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`);
-                setInitiatives(response.data);
-            } catch (error) {
-                console.error('There was an error fetching the initiatives!', error);
-                console.log(axios.defaults.headers.common); // Log headers to ensure the Authorization header is set
-            }
-        };
-
-        fetchInitiatives();
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`)
+            .then(response => setInitiatives(response.data))
+            .catch(error => console.error('There was an error fetching the initiatives!', error));
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <h2>Strategic Initiatives</h2>
-            <ul>
+            <div className="row">
                 {initiatives.map(initiative => (
-                    <li key={initiative.id}>
-                        <h3>{initiative.name}</h3>
-                        <p>{initiative.description}</p>
-                    </li>
+                    <div className="col s12 m6 l4" key={initiative.id}>
+                        <div className="card">
+                            <div className="card-content">
+                                <span className="card-title">{initiative.name}</span>
+                                <p>{initiative.description}</p>
+                            </div>
+                            <div className="card-action">
+                                <a href="#">View More</a>
+                            </div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
