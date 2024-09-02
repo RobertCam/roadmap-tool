@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
+import Timeline from './components/Timeline';
 import InitiativeList from './components/InitiativeList';
 import ProjectList from './components/ProjectList';
 import MilestoneList from './components/MilestoneList';
@@ -25,6 +26,10 @@ const App = () => {
                     path="/"
                     element={user ? <Home /> : <Navigate to="/login" />}
                 />
+                <Route 
+                    path="/timeline" 
+                    element={user ? <Timeline /> : <Navigate to="/login" />}  
+                />              
                 <Route
                     path="/initiatives"
                     element={user ? <InitiativeList /> : <Navigate to="/login" />}

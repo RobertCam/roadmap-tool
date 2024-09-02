@@ -25,6 +25,7 @@ class StrategicInitiative(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     detailed_brief_link = db.Column(db.String(200))
+    projects = db.relationship('Project', backref='initiative', lazy=True)
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)

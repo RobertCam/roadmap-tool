@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_migrate import Migrate
 from datetime import datetime
 from flask_cors import CORS
 
@@ -16,6 +17,9 @@ app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this to a secure 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
+
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)  # Initialize Migrate after db and app
 
 # Configure CORS
 CORS(app, resources={
@@ -159,8 +163,39 @@ def get_initiatives():
             'key_metrics': initiative.key_metrics,
             'start_date': initiative.start_date.strftime('%Y-%m-%d'),
             'end_date': initiative.end_date.strftime('%Y-%m-%d'),
-            'detailed_brief_link': initiative.detailed_brief_link
+            'detailed_brief_link': initiative.detailed_brief_link,
+            'projects': []
         }
+
+        for project in initiative.projects:
+            project_data = {
+                'id': project.id,
+                'name': project.name,
+                'description': project.description,
+                'problem_statement': project.problem_statement,
+                'hypothesis': project.hypothesis,
+                'start_date': project.start_date.strftime('%Y-%m-%d'),
+                'end_date': project.end_date.strftime('%Y-%m-%d'),
+                'status': project.status,
+                'project_brief_link': project.project_brief_link,
+                'design_board_link': project.design_board_link,
+                'milestones': []
+            }
+
+            for milestone in project.milestones:
+                milestone_data = {
+                    'id': milestone.id,
+                    'name': milestone.name,
+                    'description': milestone.description,
+                    'start_date': milestone.start_date.strftime('%Y-%m-%d'),
+                    'end_date': milestone.end_date.strftime('%Y-%m-%d'),
+                    'status': milestone.status,
+                    'github_link': milestone.github_link
+                }
+                project_data['milestones'].append(milestone_data)
+
+            initiative_data['projects'].append(project_data)
+
         output.append(initiative_data)
 
     return jsonify(output)
@@ -171,7 +206,7 @@ def get_initiative(id):
     current_user_id = get_jwt_identity()
     initiative = StrategicInitiative.query.filter_by(id=id, user_id=current_user_id).first_or_404()
 
-    return jsonify({
+    initiative_data = {
         'id': initiative.id,
         'name': initiative.name,
         'description': initiative.description,
@@ -180,8 +215,40 @@ def get_initiative(id):
         'key_metrics': initiative.key_metrics,
         'start_date': initiative.start_date.strftime('%Y-%m-%d'),
         'end_date': initiative.end_date.strftime('%Y-%m-%d'),
-        'detailed_brief_link': initiative.detailed_brief_link
-    })
+        'detailed_brief_link': initiative.detailed_brief_link,
+        'projects': []
+    }
+
+    for project in initiative.projects:
+        project_data = {
+            'id': project.id,
+            'name': project.name,
+            'description': project.description,
+            'problem_statement': project.problem_statement,
+            'hypothesis': project.hypothesis,
+            'start_date': project.start_date.strftime('%Y-%m-%d'),
+            'end_date': project.end_date.strftime('%Y-%m-%d'),
+            'status': project.status,
+            'project_brief_link': project.project_brief_link,
+            'design_board_link': project.design_board_link,
+            'milestones': []
+        }
+
+        for milestone in project.milestones:
+            milestone_data = {
+                'id': milestone.id,
+                'name': milestone.name,
+                'description': milestone.description,
+                'start_date': milestone.start_date.strftime('%Y-%m-%d'),
+                'end_date': milestone.end_date.strftime('%Y-%m-%d'),
+                'status': milestone.status,
+                'github_link': milestone.github_link
+            }
+            project_data['milestones'].append(milestone_data)
+
+        initiative_data['projects'].append(project_data)
+
+    return jsonify(initiative_data)
 
 @app.route('/api/initiatives/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -259,8 +326,22 @@ def get_projects():
             'status': project.status,
             'project_brief_link': project.project_brief_link,
             'design_board_link': project.design_board_link,
-            'initiative_id': project.initiative_id
+            'initiative_id': project.initiative_id,
+            'milestones': []
         }
+
+        for milestone in project.milestones:
+            milestone_data = {
+                'id': milestone.id,
+                'name': milestone.name,
+                'description': milestone.description,
+                'start_date': milestone.start_date.strftime('%Y-%m-%d'),
+                'end_date': milestone.end_date.strftime('%Y-%m-%d'),
+                'status': milestone.status,
+                'github_link': milestone.github_link
+            }
+            project_data['milestones'].append(milestone_data)
+
         output.append(project_data)
 
     return jsonify(output)
@@ -271,7 +352,7 @@ def get_project(id):
     current_user_id = get_jwt_identity()
     project = Project.query.filter_by(id=id, user_id=current_user_id).first_or_404()
 
-    return jsonify({
+    project_data = {
         'id': project.id,
         'name': project.name,
         'description': project.description,
@@ -282,8 +363,23 @@ def get_project(id):
         'status': project.status,
         'project_brief_link': project.project_brief_link,
         'design_board_link': project.design_board_link,
-        'initiative_id': project.initiative_id
-    })
+        'initiative_id': project.initiative_id,
+        'milestones': []
+    }
+
+    for milestone in project.milestones:
+        milestone_data = {
+            'id': milestone.id,
+            'name': milestone.name,
+            'description': milestone.description,
+            'start_date': milestone.start_date.strftime('%Y-%m-%d'),
+            'end_date': milestone.end_date.strftime('%Y-%m-%d'),
+            'status': milestone.status,
+            'github_link': milestone.github_link
+        }
+        project_data['milestones'].append(milestone_data)
+
+    return jsonify(project_data)
 
 @app.route('/api/projects/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -369,7 +465,7 @@ def get_milestone(id):
     current_user_id = get_jwt_identity()
     milestone = Milestone.query.filter_by(id=id, user_id=current_user_id).first_or_404()
 
-    return jsonify({
+    milestone_data = {
         'id': milestone.id,
         'name': milestone.name,
         'description': milestone.description,
@@ -378,7 +474,9 @@ def get_milestone(id):
         'status': milestone.status,
         'github_link': milestone.github_link,
         'project_id': milestone.project_id
-    })
+    }
+
+    return jsonify(milestone_data)
 
 @app.route('/api/milestones/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -393,7 +491,7 @@ def update_milestone(id):
     milestone.end_date = datetime.strptime(data['end_date'], '%Y-%m-%d')
     milestone.status = data['status']
     milestone.github_link = data.get('github_link')
-    milestone.project_id = data['project_id']
+    milestone.project_id = data.get('project_id')
 
     db.session.commit()
 

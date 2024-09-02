@@ -1,0 +1,38 @@
+.timeline-container {
+    padding: 20px;
+}
+
+.timeline-controls {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.initiative-card,
+.project-card,
+.milestone-card {
+    position: relative;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.expand-button {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.project-list,
+.milestone-list {
+    margin-top: 10px;
+    margin-left: 20px;
+    border-left: 2px solid #ccc;
+    padding-left: 20px;
+}
