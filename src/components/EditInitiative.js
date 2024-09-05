@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import M from 'materialize-css';
 
 const EditInitiative = () => {
     const { id } = useParams();
@@ -52,79 +53,99 @@ const EditInitiative = () => {
         <div className="container">
             <h2>Edit Initiative</h2>
             <form onSubmit={handleSubmit}>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={initiative.name}
-                        onChange={handleChange}
-                    />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={initiative.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            className="materialize-textarea"
+                            value={initiative.description}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="problem">Problem</label>
+                        <textarea
+                            id="problem"
+                            name="problem"
+                            className="materialize-textarea"
+                            value={initiative.problem}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="desired_outcome">Desired Outcome</label>
+                        <textarea
+                            id="desired_outcome"
+                            name="desired_outcome"
+                            className="materialize-textarea"
+                            value={initiative.desired_outcome}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="key_metrics">Key Metrics</label>
+                        <input
+                            type="text"
+                            id="key_metrics"
+                            name="key_metrics"
+                            value={initiative.key_metrics}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s6">
+                        <label htmlFor="start_date">Start Date</label>
+                        <input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            value={initiative.start_date}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s6">
+                        <label htmlFor="end_date">End Date</label>
+                        <input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            value={initiative.end_date}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="detailed_brief_link">Detailed Brief Link</label>
+                        <input
+                            type="url"
+                            id="detailed_brief_link"
+                            name="detailed_brief_link"
+                            value={initiative.detailed_brief_link}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="col s12">
+                        <button type="submit" className="btn">Update Initiative</button>
+                    </div>
                 </div>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={initiative.description}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="date"
-                        name="start_date"
-                        placeholder="Start Date"
-                        value={initiative.start_date}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="date"
-                        name="end_date"
-                        placeholder="End Date"
-                        value={initiative.end_date}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="problem"
-                        placeholder="Problem"
-                        value={initiative.problem}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="desired_outcome"
-                        placeholder="Desired Outcome"
-                        value={initiative.desired_outcome}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="key_metrics"
-                        placeholder="Key Metrics"
-                        value={initiative.key_metrics}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="url"
-                        name="detailed_brief_link"
-                        placeholder="Detailed Brief Link"
-                        value={initiative.detailed_brief_link}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit" className="btn">Update Initiative</button>
             </form>
         </div>
     );

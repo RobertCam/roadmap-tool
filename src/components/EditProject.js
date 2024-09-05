@@ -15,7 +15,7 @@ const EditProject = () => {
         end_date: '',
         status: '',
         project_brief_link: '',
-        design_board_link: '',
+        design_board_link: ''
     });
 
     useEffect(() => {
@@ -53,42 +53,110 @@ const EditProject = () => {
         <div className="container">
             <h2>Edit Project</h2>
             <form onSubmit={handleSubmit}>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={project.name}
-                        onChange={handleChange}
-                    />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={project.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            className="materialize-textarea"
+                            value={project.description}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="problem_statement">Problem Statement</label>
+                        <textarea
+                            id="problem_statement"
+                            name="problem_statement"
+                            className="materialize-textarea"
+                            value={project.problem_statement}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="hypothesis">Hypothesis</label>
+                        <textarea
+                            id="hypothesis"
+                            name="hypothesis"
+                            className="materialize-textarea"
+                            value={project.hypothesis}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s6">
+                        <label htmlFor="start_date">Start Date</label>
+                        <input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            value={project.start_date}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s6">
+                        <label htmlFor="end_date">End Date</label>
+                        <input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            value={project.end_date}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="status">Status</label>
+                        <input
+                            type="text"
+                            id="status"
+                            name="status"
+                            value={project.status}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="project_brief_link">Project Brief Link</label>
+                        <input
+                            type="url"
+                            id="project_brief_link"
+                            name="project_brief_link"
+                            value={project.project_brief_link}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="input-field col s12">
+                        <label htmlFor="design_board_link">Design Board Link</label>
+                        <input
+                            type="url"
+                            id="design_board_link"
+                            name="design_board_link"
+                            value={project.design_board_link}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="col s12">
+                        <button type="submit" className="btn">Update Project</button>
+                    </div>
                 </div>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={project.description}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="date"
-                        name="start_date"
-                        value={project.start_date}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="input-field">
-                    <input
-                        type="date"
-                        name="end_date"
-                        value={project.end_date}
-                        onChange={handleChange}
-                    />
-                </div>
-                {/* Add other fields as necessary */}
-                <button type="submit" className="btn">Update Project</button>
             </form>
         </div>
     );
