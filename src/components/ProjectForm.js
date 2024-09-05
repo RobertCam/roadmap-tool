@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import M from 'materialize-css';
 
 const ProjectForm = ({ isEdit }) => {
     const { id } = useParams();
@@ -28,6 +29,10 @@ const ProjectForm = ({ isEdit }) => {
         }
         fetchInitiatives();
     }, [isEdit]);
+
+    useEffect(() => {
+        M.FormSelect.init(document.querySelectorAll('select'));
+    }, [initiatives]);
 
     const fetchProject = async () => {
         try {

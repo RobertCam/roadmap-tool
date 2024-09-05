@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import InitiativeCard from './InitiativeCard'; // Import the reusable card
 
 const InitiativeList = () => {
     const [initiatives, setInitiatives] = useState([]);
@@ -17,15 +17,8 @@ const InitiativeList = () => {
             <div className="row">
                 {initiatives.map(initiative => (
                     <div className="col s12 m6 l4" key={initiative.id}>
-                        <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">{initiative.name}</span>
-                                <p>{initiative.description}</p>
-                            </div>
-                            <div className="card-action">
-                            <Link to={`/edit/initiative/${initiative.id}`} className="btn-small">Edit</Link>
-                            </div>
-                        </div>
+                        {/* Use the reusable card component */}
+                        <InitiativeCard initiative={initiative} />
                     </div>
                 ))}
             </div>

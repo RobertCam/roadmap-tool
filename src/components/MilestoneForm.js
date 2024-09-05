@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import M from 'materialize-css';
 
 const MilestoneForm = ({ isEdit }) => {
     const { id } = useParams();
@@ -24,6 +25,10 @@ const MilestoneForm = ({ isEdit }) => {
         }
         fetchProjects();
     }, [isEdit]);
+
+    useEffect(() => {
+        M.FormSelect.init(document.querySelectorAll('select'));
+    }, [projects]);
 
     const fetchMilestone = async () => {
         try {

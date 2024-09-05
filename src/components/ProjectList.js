@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import ProjectCard from './ProjectCard'; // Import the reusable ProjectCard component
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
@@ -18,15 +17,8 @@ const ProjectList = () => {
             <div className="row">
                 {projects.map(project => (
                     <div className="col s12 m6 l4" key={project.id}>
-                        <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">{project.name}</span>
-                                <p>{project.description}</p>
-                            </div>
-                            <div className="card-action">
-                                <Link to={`/edit/project/${project.id}`} className="btn-small">Edit</Link>
-                            </div>
-                        </div>
+                        {/* Use the reusable ProjectCard component */}
+                        <ProjectCard project={project} />
                     </div>
                 ))}
             </div>

@@ -73,3 +73,73 @@
   background-color: #2196f3;
   color: white;
 }
+
+.form-container {
+  margin-bottom: 20px;
+}
+
+.input-field input, .input-field select, .input-field textarea {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.card-section {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.card-section h5 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.card-section p {
+  margin-bottom: 10px;
+}
+
+.card-section a {
+  color: #039be5;
+  text-decoration: none;
+}
+
+.card-section a:hover {
+  text-decoration: underline;
+}
+
+.card .card-title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.card-action {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+}
+
+
+.btn-small {
+  background-color: #26a69a;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.9em;
+}
+
+a {
+  color: #26a69a;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+

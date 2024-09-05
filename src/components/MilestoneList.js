@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import MilestoneCard from './MilestoneCard'; // Import the reusable MilestoneCard component
 
 const MilestoneList = () => {
     const [milestones, setMilestones] = useState([]);
@@ -18,15 +17,8 @@ const MilestoneList = () => {
             <div className="row">
                 {milestones.map(milestone => (
                     <div className="col s12 m6 l4" key={milestone.id}>
-                        <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">{milestone.name}</span>
-                                <p>{milestone.description}</p>
-                            </div>
-                            <div className="card-action">
-                                <Link to={`/edit/milestone/${milestone.id}`} className="btn-small">Edit</Link>
-                            </div>
-                        </div>
+                        {/* Use the reusable MilestoneCard component */}
+                        <MilestoneCard milestone={milestone} />
                     </div>
                 ))}
             </div>
