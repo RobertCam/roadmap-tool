@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const MilestoneList = () => {
     const [milestones, setMilestones] = useState([]);
@@ -22,7 +24,7 @@ const MilestoneList = () => {
                                 <p>{milestone.description}</p>
                             </div>
                             <div className="card-action">
-                                <a href="#">View More</a>
+                                <Link to={`/edit-milestone/${milestone.id}`} className="btn-small">Edit</Link>
                             </div>
                         </div>
                     </div>

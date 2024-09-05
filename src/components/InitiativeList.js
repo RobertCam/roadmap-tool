@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const InitiativeList = () => {
     const [initiatives, setInitiatives] = useState([]);
@@ -22,7 +23,7 @@ const InitiativeList = () => {
                                 <p>{initiative.description}</p>
                             </div>
                             <div className="card-action">
-                                <a href="#">View More</a>
+                                <Link to={`/edit-initiative/${initiative.id}`} className="btn-small">Edit</Link>
                             </div>
                         </div>
                     </div>

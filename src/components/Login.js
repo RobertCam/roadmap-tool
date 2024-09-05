@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';  // Combined the imports into one line
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
 
@@ -14,7 +14,8 @@ const Login = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/login`, { username, password });
             login(response.data.access_token);
-            navigate('/');
+            console.log("Login successful, navigating to home.");
+            navigate('/');  // Redirect to home after successful login
         } catch (error) {
             console.error('There was an error logging in!', error);
         }
@@ -42,9 +43,6 @@ const Login = () => {
                 </div>
                 <button type="submit" className="btn">Login</button>
             </form>
-            <div className="center-align">
-                <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-            </div>
         </div>
     );
 };
