@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthContext } from './AuthContext';
 import Timeline from './components/Timeline';
 import InitiativeList from './components/InitiativeList';
-import EditInitiative from './components/EditInitiative';
 import ProjectList from './components/ProjectList';
-import EditProject from './components/EditProject';
 import MilestoneList from './components/MilestoneList';
-import EditMilestone from './components/EditMilestone';
+import ProjectForm from './components/ProjectForm';
+import InitiativeForm from './components/InitiativeForm';
+import MilestoneForm from './components/MilestoneForm';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
@@ -36,27 +36,21 @@ const App = () => {
                 <Route
                     path="/initiatives"
                     element={user ? <InitiativeList /> : <Navigate to="/login" />}
-                />
-                 <Route 
-                    path="/edit-initiative/:id" 
-                    element={user ? <EditInitiative /> : <Navigate to="/login" />} 
-                />
+                />            
                 <Route
                     path="/projects"
                     element={user ? <ProjectList /> : <Navigate to="/login" />}
-                />
-                <Route 
-                    path="/edit-project/:id" 
-                    element={user ? <EditProject /> : <Navigate to="login" />} 
                 />
                 <Route
                     path="/milestones"
                     element={user ? <MilestoneList /> : <Navigate to="/login" />}
                 />
-                <Route
-                    path="/edit-milestone/:id"
-                    element={user ? <EditMilestone /> : <Navigate to="/login" />}
-                />
+                <Route path="/create/project" element={user ? <ProjectForm isEdit={false} />  : <Navigate to="/login" />} />
+                <Route path="/create/initiative" element={user ? <InitiativeForm isEdit={false} /> : <Navigate to="/login" />} />
+                <Route path="/create/milestone" element={user ? <MilestoneForm isEdit={false} /> : <Navigate to="/login" />} />
+                <Route path="/edit/project/:id" element={<ProjectForm isEdit={true} />} />
+                <Route path="/edit/initiative/:id" element={<InitiativeForm isEdit={true} />} />
+                <Route path="/edit/milestone/:id" element={<MilestoneForm isEdit={true} />} />
             </Routes>
         </Router>
     );

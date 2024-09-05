@@ -23,7 +23,7 @@ const InitiativeList = () => {
                                 <p>{initiative.description}</p>
                             </div>
                             <div className="card-action">
-                                <Link to={`/edit-initiative/${initiative.id}`} className="btn-small">Edit</Link>
+                            <Link to={`/edit/initiative/${initiative.id}`} className="btn-small">Edit</Link>
                             </div>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ const ProjectList = () => {
                                 <p>{project.description}</p>
                             </div>
                             <div className="card-action">
-                                <Link to={`/edit-project/${project.id}`} className="btn-small">Edit</Link>
+                                <Link to={`/edit/project/${project.id}`} className="btn-small">Edit</Link>
                             </div>
                         </div>
                     </div>

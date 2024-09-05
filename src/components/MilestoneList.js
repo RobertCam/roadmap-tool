@@ -24,7 +24,7 @@ const MilestoneList = () => {
                                 <p>{milestone.description}</p>
                             </div>
                             <div className="card-action">
-                                <Link to={`/edit-milestone/${milestone.id}`} className="btn-small">Edit</Link>
+                                <Link to={`/edit/milestone/${milestone.id}`} className="btn-small">Edit</Link>
                             </div>
                         </div>
                     </div>

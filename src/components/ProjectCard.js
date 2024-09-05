@@ -11,7 +11,7 @@ const ProjectCard = ({ project, view }) => {
             <div className="project-header" onClick={toggleExpand}>
                 <h4>{project.name}</h4>
                 <p>{project.description}</p>
-                <Link to={`/edit-project/${project.id}`} className="btn-small">Edit</Link>
+                <Link to={`/edit/project/${project.id}`} className="btn-small">Edit</Link>
                 <button className="expand-button">{expanded ? 'Collapse' : 'Expand'}</button>
             </div>
             {expanded && (

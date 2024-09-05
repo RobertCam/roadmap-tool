@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+/* Styles for the create dropdown */
+.create-dropdown {
+  position: absolute;
+  background-color: white;
+  top: 60px; /* Position it below the navbar */
+  right: 10px; /* Adjust to match the button's right position */
+  z-index: 1000; /* Ensure it appears above other elements */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+/* Dropdown select element styling */
+.create-dropdown select {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Aligns the dropdown with the navbar */
+.nav-wrapper {
+  position: relative; /* Ensure positioning is relative for dropdown alignment */
+}
+
+/* Create button styling */
+.btn {
+  background-color: #2196f3;
+  color: white;
+}

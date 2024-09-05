@@ -12,7 +12,7 @@ const InitiativeCard = ({ initiative, view }) => {
             <div className="initiative-header" onClick={toggleExpand}>
                 <h3>{initiative.name}</h3>
                 <p>{initiative.description}</p>
-                <Link to={`/edit-initiative/${initiative.id}`} className="btn-small">Edit</Link>
+                <Link to={`/edit/initiative/${initiative.id}`} className="btn-small">Edit</Link>
                 <button className="expand-button">{expanded ? 'Collapse' : 'Expand'}</button>
             </div>
             {expanded && (
