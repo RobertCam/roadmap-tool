@@ -1,38 +1,27 @@
-.timeline-container {
-    padding: 20px;
+/* Initiatives */
+.initiative-group {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
 }
 
-.timeline-controls {
-    margin-bottom: 20px;
-    text-align: right;
+/* Projects */
+.project-item {
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;  /* Extra bottom space */
 }
 
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* Milestones */
+.milestone-item {
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;  /* Extra bottom space */
 }
 
-.initiative-card,
-.project-card,
-.milestone-card {
-    position: relative;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.expand-button {
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.project-list,
-.milestone-list {
-    margin-top: 10px;
-    margin-left: 20px;
-    border-left: 2px solid #ccc;
-    padding-left: 20px;
+.vis-item.vis-dot, .vis-item.vis-line {
+    display: none !important;
 }
