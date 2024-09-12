@@ -1,89 +1,79 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import Timeline from 'react-calendar-timeline';
-import 'react-calendar-timeline/lib/Timeline.css';
-import moment from 'moment';
+import { DataSet, Timeline } from 'vis-timeline/standalone';
+import 'vis-timeline/styles/vis-timeline-graph2d.min.css';
 import axios from 'axios';
 
 const TimelineView = () => {
-    const [initiatives, setInitiatives] = useState([]);
-    const [timeScale, setTimeScale] = useState('month'); // Default time scale
+    const [initiatives, setInitiatives] = useState([]); // Ensure initiatives is initialized as an empty array
     const timelineRef = useRef(null);
-    const location = useLocation();
 
     useEffect(() => {
         fetchInitiatives();
-    }, [location.state?.refresh]); // Re-fetch when navigating with a refresh state
+    }, []);
 
     const fetchInitiatives = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/initiatives`);
-            setInitiatives(response.data);
+            setInitiatives(response.data || []); // Ensure response data is an array or fallback to an empty array
         } catch (error) {
             console.error('Error fetching initiatives:', error);
         }
     };
 
-    const groups = initiatives.map(initiative => ({
-        id: initiative.id,
-        title: initiative.name,
-    }));
+    useEffect(() => {
+        if (initiatives.length > 0) {
+            const container = timelineRef.current;
 
-    const items = initiatives.flatMap(initiative =>
-        initiative.projects.map(project => ({
-            id: project.id,
-            group: initiative.id,
-            title: project.name,
-            start_time: moment(project.start_date),
-            end_time: moment(project.end_date),
-        }))
-    );
+            // Prepare groups (initiatives) and items (projects)
+            const groups = initiatives.map((initiative) => ({
+                id: initiative.id,
+                content: initiative.name,
+            }));
 
-    const defaultTimeStart = moment().startOf('month').toDate();
-    const defaultTimeEnd = moment().endOf('month').toDate();
+            const items = initiatives.flatMap((initiative) =>
+                initiative.projects.map((project) => ({
+                    id: project.id,
+                    group: initiative.id,
+                    content: project.name,
+                    start: project.start_date,
+                    end: project.end_date,
+                }))
+            );
 
-    const handleTimeScaleChange = (scale) => {
-        setTimeScale(scale);
+            // Create DataSet for groups and items
+            const timelineGroups = new DataSet(groups);
+            const timelineItems = new DataSet(items);
 
-        let start, end;
+            const options = {
+                editable: false,
+                selectable: true,
+                stack: true,
+                start: new Date(),
+                end: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+                zoomable: true,
+                margin: { item: 20 },
+            };
 
-        switch (scale) {
-            case 'week':
-                start = moment().startOf('week').toDate();
-                end = moment().endOf('week').toDate();
-                break;
-            case 'month':
-                start = moment().startOf('month').toDate();
-                end = moment().endOf('month').toDate();
-                break;
-            case 'quarter':
-                start = moment().startOf('quarter').toDate();
-                end = moment().endOf('quarter').toDate();
-                break;
-            default:
-                start = moment().startOf('month').toDate();
-                end = moment().endOf('month').toDate();
-                break;
+            // Initialize the timeline
+            const timeline = new Timeline(container, timelineItems, timelineGroups, options);
+
+            // Clean up timeline on unmount
+            return () => {
+                if (timeline) {
+                    timeline.destroy();
+                }
+            };
         }
-
-        timelineRef.current.updateScrollCanvas(start, end);
-    };
+    }, [initiatives]); // Only run the effect when initiatives data changes
 
     return (
         <div>
-            <div className="timeline-controls">
-                <button onClick={() => handleTimeScaleChange('week')}>Week</button>
-                <button onClick={() => handleTimeScaleChange('month')}>Month</button>
-                <button onClick={() => handleTimeScaleChange('quarter')}>Quarter</button>
-            </div>
-            <Timeline
-                ref={timelineRef}
-                groups={groups}
-                items={items}
-                defaultTimeStart={defaultTimeStart}
-                defaultTimeEnd={defaultTimeEnd}
-                lineHeight={50}
-            />
+            {/* Check if there are initiatives to display */}
+            {initiatives.length === 0 ? (
+                <p>Loading timeline...</p>
+            ) : (
+                <div ref={timelineRef} style={{ height: '500px' }} />
+            )}
         </div>
     );
 };
